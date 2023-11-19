@@ -19,8 +19,8 @@ Or, I will just use tikz in org-mode like:
 #+header: :headers '("\\usepackage{tikz}")
 #+begin_src latex
   \begin{tikzpicture}
-      \fill[yellow] (0,0) circle (3cm);
-    \end{tikzpicture}
+    \fill[yellow] (0,0) circle (3cm);
+  \end{tikzpicture}
 #+end_src
 
 #+RESULTS: circle
