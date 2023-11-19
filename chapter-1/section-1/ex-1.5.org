@@ -36,4 +36,3 @@ the ~if~ statement, and since the statement evaluates to true, only
 the first argument to ~if~ will need to be evaluated. I.e., ~test~
 will return $0$.
 #+end_quote
-
