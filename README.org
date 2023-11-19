@@ -6,3 +6,24 @@ making a gh repo and starting over from scratch helps me stay focused!
 Note: I plan on using [[https://call-cc.org/][chicken scheme]] for the vast majority of
 topics. I will likely use racket with it's handy compatability
 language for the picture exercises.
+
+I want to make my diagrams using
+- https://plantuml.com
+- http://eschulte.github.io/babel-dev/DONE-integrate-plantuml-support.html
+
+Or, I will just use tikz in org-mode like:
+#+name: circle
+#+header: :file circle.png
+#+header: :results file drawer
+#+header: :imagemagick yes
+#+header: :headers '("\\usepackage{tikz}")
+#+begin_src latex
+  \begin{tikzpicture}
+      \fill[yellow] (0,0) circle (3cm);
+    \end{tikzpicture}
+#+end_src
+
+#+RESULTS: circle
+:results:
+[[file:circle.png]]
+:end:
