@@ -12,18 +12,23 @@ I want to make my diagrams using
 - http://eschulte.github.io/babel-dev/DONE-integrate-plantuml-support.html
 
 Or, I will just use tikz in org-mode like:
-#+name: circle
-#+header: :file circle.png
+#+name: tree-example
+#+header: :file tree-example.png
 #+header: :results file drawer
 #+header: :imagemagick yes
 #+header: :headers '("\\usepackage{tikz}")
 #+begin_src latex
   \begin{tikzpicture}
-    \fill[yellow] (0,0) circle (3cm);
+    \node {root}
+    child {node {left}}
+    child {node {right}
+      child {node {child}}
+      child {node {child}}
+    };
   \end{tikzpicture}
 #+end_src
 
-#+RESULTS: circle
+#+RESULTS: tree-example
 :results:
-[[file:circle.png]]
+[[file:tree-example.png]]
 :end:
