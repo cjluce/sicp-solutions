@@ -11,7 +11,7 @@ I want to make my diagrams using
 - https://plantuml.com
 - http://eschulte.github.io/babel-dev/DONE-integrate-plantuml-support.html
 
-Or, I will just use tikz in org-mode like:
+Or, I will just use tikz in org-mode like https://tikz.dev/tikz-trees:
 #+name: tree-example
 #+header: :file tree-example.png
 #+header: :results file drawer
