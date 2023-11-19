@@ -1,0 +1,39 @@
+*Exercise 1.5:* Ben Bitdiddle has invented a test to determine whether
+the interpreter he is faced with is using applicative-order evaluation
+or normal-order evaluation.  He defines the following two procedures:
+
+#+begin_src scheme
+  (define (p) (p))
+
+  (define (test x y)
+    (if (= x 0)
+	0
+	y))
+#+end_src
+
+Then he evaluates the expression
+
+#+begin_src scheme
+  (test 0 (p))
+#+end_src
+
+What behavior will Ben observe with an interpreter that uses
+applicative-order evaluation?  What behavior will he observe with an
+interpreter that uses normal-order evaluation?  Explain your answer.
+(Assume that the evaluation rule for the special form ~if~ is the same
+whether the interpreter is using normal or applicative order: The
+predicate expression is evaluated first, and the result determines
+whether to evaluate the consequent or the alternative expression.)
+
+#+begin_quote
+With an interpreter that uses applicative-order eval., the interpreter
+will first evaluate, then apply. Hence, the call to ~(p)~ will
+evaluate and will result in an infinite loop.
+
+With an interpreter that uses normal-order eval., the interpreter will
+first expand, then apply. Hence, both arguments will both be passed to
+the ~if~ statement, and since the statement evaluates to true, only
+the first argument to ~if~ will need to be evaluated. I.e., ~test~
+will return $0$.
+#+end_quote
+
