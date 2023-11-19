@@ -1,0 +1,41 @@
+*Exercise 1.6:* Alyssa P. Hacker doesn't see why `if' needs to be
+provided as a special form.  "Why can't I just define it as an
+ordinary procedure in terms of `cond'?" she asks.  Alyssa's friend
+Eva Lu Ator claims this can indeed be done, and she defines a new
+version of `if':
+
+#+begin_src scheme
+  (define (new-if predicate then-clause else-clause)
+    (cond (predicate then-clause)
+	  (else else-clause)))
+#+end_src
+
+Eva demonstrates the program for Alyssa:
+
+#+begin_src scheme
+  (new-if (= 2 3) 0 5)
+  5
+
+  (new-if (= 1 1) 0 5)
+  0
+#+end_src
+
+Delighted, Alyssa uses `new-if' to rewrite the square-root program:
+
+#+begin_src scheme
+  (define (sqrt-iter guess x)
+    (new-if (good-enough? guess x)
+	    guess
+	    (sqrt-iter (improve guess x)
+		       x)))
+#+end_src
+
+What happens when Alyssa attempts to use this to compute square
+roots?  Explain.
+
+#+begin_quote
+Because of applicative-order interpretation, all arguments to ~new-if~
+are evaluated, then applied. This is unlike the real ~if~ statemen
+which, as a special form, only evaluates one branch. Alyssa's program
+will likely result in an infinite loop.
+#+end_quote
