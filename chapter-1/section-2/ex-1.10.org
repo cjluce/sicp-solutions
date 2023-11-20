@@ -28,7 +28,7 @@ above:
 
 ~(define (g n) (A 1 n))~ is $2^n$
 
-~(define (h n) (A 2 n))~ is a tetration ($2^(2^(...))$ n times)
+~(define (h n) (A 2 n))~ is a tetration ($2^{2^{...^{2}}}$ n times)
 
 ~(define (k n) (* 5 n n))~
 
