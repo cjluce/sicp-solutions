@@ -1,0 +1,62 @@
+*Exercise 2.6:* In case representing pairs as procedures wasn't
+mind-boggling enough, consider that, in a language that can manipulate
+procedures, we can get by without numbers (at least insofar as
+nonnegative integers are concerned) by implementing 0 and the
+operation of adding 1 as the following:
+
+This representation is known as "Church numerals", after its inventor,
+Alonzo Church, the logician who invented the [lambda] calculus.
+
+Define `one' and `two' directly (not in terms of `zero' and `add-1').
+(Hint: Use substitution to evaluate `(add-1 zero)').  Give a direct
+definition of the addition procedure `+' (not in terms of repeated
+application of `add-1').
+
+- This one was very tedious. I had more typed out, especially while I
+  was trying to parse everything out to understand things, but I have
+  deleted all of the mess to add a sense of clarity. The basic idea is
+  simple, it just gets a little obscured by the constant calls to
+  ~(lambda (f) ...)~ and ~(lambda (x) ...)~. Once I learned just to
+  operate underneath these two layers, treating both ~f~ and ~x~ as
+  just dummy concepts, it became a lot easier.
+
+#+header: :session
+#+name: exercise-2.6
+#+begin_src scheme :results silent :var data=imports
+  (define zero (lambda (f)
+		 (lambda (x)
+		   x))) ; x
+  (define one  (lambda (f)
+		 (lambda (x)
+		   (f x)))) ; f(x)
+  (define (add-1 n)
+    (lambda (f)
+      (lambda (x)
+	;; ((n f) x) really says x composed w/ f n times
+	(f ((n f) x)))))
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (add-1 zero)
+  ;; (lambda (f) (lambda (x) (f (((lambda (f) (lambda (x) x)) f) x))))
+  ;; Note: ((lambda (f) (lambda (x) x)) f) => (lambda (x) x)
+  ;; Since f is unused...
+  ;; So...
+  ;; (lambda (f) (lambda (x) (f ((lambda (x) x) x))))
+  ;; ((lambda (x) x) x) => x
+  ;; So we arrive at the defn of one
+  ;; (lambda (f) (lambda (x) (f x)))
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; So church numerals are just repeated function composition. So 0 =>
+  ;; x, 1 => (f x), and presumably 2 => (f (f x)). In the case of 1 + 1,
+  ;; it seems like I just compose the two. Where as the (add-1) function
+  ;; just adds via a single composition of x.
+  (define (add-a-b a b)
+    (lambda (f)
+      (lambda (x)
+	;; ((n f) x) really says x composed w/ f n times. So it seems to
+	;; reason that ((b f) x) is f composed with x b times. and then
+	;; the (a f) bit composes that composition a times.
+	((a f) ((b f) x)))))
+#+end_src
+
