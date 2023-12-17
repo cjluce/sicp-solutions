@@ -1,0 +1,30 @@
+*Exercise 2.9:* _The "width" of an interval is half of the difference
+between its upper and lower bounds_.  The width is a measure of the
+uncertainty of the number specified by the interval.  For some
+arithmetic operations the width of the result of combining two
+intervals is a function only of the widths of the argument intervals,
+whereas for others the width of the combination is not a function of
+the widths of the argument intervals.
+
+#+begin_src scheme
+  (define (width-interval i)
+    (/ (- (upper-bound i) (lower-bound i)) 2.0))
+#+end_src
+
+Show that the width of the sum (or difference) of two intervals is a
+function only of the widths of the intervals being added (or
+subtracted).
+
+Let $I=(a,b)$ and $J=(c,d)$. Then we calculate the sum to be
+$$I+J=(a+c,b+d)$$. The width of $I+J$ is then given by:
+$\frac{b+d - (a+c)}{2}$. Then, with some algebra:
+\[
+\frac{b+d - (a+c)}{2} = \frac{b - a}{2} + \frac{d - c}{2} = width(I) + width(J)
+\].
+
+Give examples to show that this is not true for
+multiplication or division.
+
+Consider the intervals $I=(-1,1)$ and $J=(2,3)$. We can see that
+$wI=1$ and $wJ=0.5$. But, calculating the product gives:
+$K=I*J=(-3,3)$ and $$wK=\frac{3 - (-3)}{2}$$.
