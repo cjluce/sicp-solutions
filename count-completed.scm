@@ -116,4 +116,3 @@
 		      (solved-visualization-by-chapter chapter)))
 	    '(1 2 3 4 5))
   (printf "Total: ~A%~N" (round (* 100.0 (/ total-solved n-exercises)))))
-

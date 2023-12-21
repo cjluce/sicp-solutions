@@ -5,6 +5,21 @@ making a gh repo and starting over from scratch helps me stay focused!
 For my convenience, I am using an [[https://sarabander.github.io/sicp/html/][html version of sicp]] (frankly, it
 looks better).
 
+Solved exercises:
+#+begin_src scheme :results output
+  (load "count-completed.scm")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Chapter 1: 74.0%: ++++++++++++++++++++++++-+--++++++------+++---
+Chapter 2: 20.0%: ++++++++++++----+++++++--------------------------------------------------------------------------
+Chapter 3: 0.0%: ----------------------------------------------------------------------------------
+Chapter 4: 0.0%: -------------------------------------------------------------------------------
+Chapter 5: 0.0%: ----------------------------------------------------
+Total: 15.0%
+#+end_example
+
 Note: I plan on using [[https://call-cc.org/][chicken scheme]] for the vast majority of
 topics. I will likely use racket with it's handy compatability
 language for the picture exercises.
