@@ -9,6 +9,14 @@ Note: I plan on using [[https://call-cc.org/][chicken scheme]] for the vast majo
 topics. I will likely use racket with it's handy compatability
 language for the picture exercises.
 
+UPDATE: I start using racket in chapter 2 section 2. I am not sure how
+long I will continue to use it...
+
+In order to get the racket compatability language, you rust run:
+#+begin_src bash
+  raco pkg install sicp
+#+end_src
+
 I want to make my diagrams using
 - https://plantuml.com
 - http://eschulte.github.io/babel-dev/DONE-integrate-plantuml-support.html
