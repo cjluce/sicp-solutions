@@ -2,7 +2,8 @@
 	(chicken irregex)
 	(chicken string)
 	(chicken base)
-	(chicken format))
+	(chicken format)
+	(chicken sort))
 
 (define n-chapters 5)
 (define n-exercises-by-chapter '((1 . 46) (2 . 97) (3 . 82) (4 . 79) (5 . 52)))
@@ -16,29 +17,6 @@
 		(irregex-search (glob->sre "ex-*") x))))
 
 ;; structure of file split looks like (. chapter-1 section-2 ex-1.16.scm)
-(define solved-exercises
-  (let ((data '()))
-    (for-each (lambda (file)
-		;; split up the file string, and reference the parts
-		(let* ((file-split (string-split file "/"))
-		       (chapter-raw (list-ref file-split 1))
-		       (section-raw (list-ref file-split 2))
-		       (problem-raw (list-ref file-split 3))
-		       (chapter (string->number
-				 (substring chapter-raw (+ 1 (substring-index "-" chapter-raw)))))
-		       (section (string->number
-				 (substring section-raw (+ 1 (substring-index "-" section-raw)))))
-		       (problem (string->number
-				 (list-ref (string-split problem-raw ".") 1))))
-		  ;; if the entry already exists, then append
-		  (let ((entry (alist-ref (cons chapter section) data equal?)))
-		    (if entry
-			(set! data (alist-update (cons chapter section) (cons problem entry) data equal?))
-			(set! data (alist-update (cons chapter section) (list problem) data equal?))))))
-	      solved-exercises-files)
-    data))
-
-
 (define solved-exercises
   (let ((data '()))
     (for-each (lambda (file)
@@ -70,6 +48,17 @@
 			(begin
 			  (set! data (alist-update chapter (list (cons section (list problem))) data)))))))
 	      solved-exercises-files)
+    ;; sort the data in each section
+    (set! data
+      (map (lambda (chapter-lst)
+	     ;; add the chapter back to the front
+	     (cons (car chapter-lst)
+		   ;; sort within the section list
+		   (map (lambda (section-lst)
+			  (cons (car section-lst) (sort (cdr section-lst) <)))
+			;; sort exercises over the sections in sorted order!
+			(sort (cdr chapter-lst) (lambda (x y) (< (car x) (car y)))))))
+	   data))
     data))
 
 (define (get-solved-exercises-for-chapter chapter)
@@ -102,3 +91,7 @@
 	      (printf "Chapter ~S: ~S%~N" chapter (share-solved-for-chapter chapter)))
 	    '(1 2 3 4 5))
   (printf "Total: ~S%~N" (round (* 100.0 (/ total-solved n-exercises)))))
+
+
+
+(print solved-exercises)
