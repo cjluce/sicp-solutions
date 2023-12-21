@@ -3,13 +3,17 @@
 	(chicken string)
 	(chicken base)
 	(chicken format)
-	(chicken sort))
+	(chicken sort)
+	srfi-1)
 
 (define n-chapters 5)
 (define n-exercises-by-chapter '((1 . 46) (2 . 97) (3 . 82) (4 . 79) (5 . 52)))
 (define n-exercises (let loop ((lst (map cdr n-exercises-by-chapter))
 			       (sum 0))
 		      (if (null? lst) sum (loop (cdr lst) (+ sum (car lst))))))
+
+(define (get-n-exercises chapter)
+  (alist-ref chapter n-exercises-by-chapter))
 
 (define solved-exercises-files
   (find-files "." #:test
@@ -49,6 +53,7 @@
 			  (set! data (alist-update chapter (list (cons section (list problem))) data)))))))
 	      solved-exercises-files)
     ;; sort the data in each section
+    ;; i think that this the chapters themselves are in sorted order
     (set! data
       (map (lambda (chapter-lst)
 	     ;; add the chapter back to the front
@@ -85,13 +90,30 @@
     (round (* 100.0 (/ solved total)))))
 
 
+(define (solved-exercise-list-by-chapter chapter)
+  (let ((section-lst (alist-ref chapter solved-exercises)))
+    (if section-lst
+	(apply append (map (lambda (x) (cdr x)) section-lst))
+	'())))
+
+(define (solved-visualization-by-chapter chapter)
+  (let* ((solved-lst (solved-exercise-list-by-chapter chapter))
+	 (total-exercises (get-n-exercises chapter))
+	 (ret-string (make-string total-exercises #\-)))
+    (do ((i 1 (+ i 1)))
+	((> i total-exercises) ret-string)
+      (cond ((null? solved-lst))
+	    ((= (car solved-lst) i)
+	     (string-set! ret-string (- i 1) #\+)
+	     (set! solved-lst (cdr solved-lst)))))))
+
 (let ((total-solved 0))
   (for-each (lambda (chapter)
 	      (set! total-solved (+ total-solved (get-solved-exercises-for-chapter chapter)))
-	      (printf "Chapter ~S: ~S%~N" chapter (share-solved-for-chapter chapter)))
+	      (printf "Chapter ~A: ~A%: ~A~N"
+		      chapter
+		      (share-solved-for-chapter chapter)
+		      (solved-visualization-by-chapter chapter)))
 	    '(1 2 3 4 5))
-  (printf "Total: ~S%~N" (round (* 100.0 (/ total-solved n-exercises)))))
+  (printf "Total: ~A%~N" (round (* 100.0 (/ total-solved n-exercises)))))
 
-
-
-(print solved-exercises)
