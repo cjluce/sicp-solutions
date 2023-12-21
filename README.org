@@ -6,7 +6,7 @@ For my convenience, I am using an [[https://sarabander.github.io/sicp/html/][htm
 looks better).
 
 Solved exercises:
-#+begin_src scheme :results output
+#+begin_src scheme :results output :exports results
   (load "count-completed.scm")
 #+end_src
 
