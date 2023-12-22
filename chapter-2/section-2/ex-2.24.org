@@ -1,0 +1,31 @@
+*Exercise 2.24:* Suppose we evaluate the expression `(list 1 (list 2
+(list 3 4)))'.  Give the result printed by the interpreter, the
+corresponding box-and-pointer structure, and the interpretation of
+this as a tree (as in *Note Figure 2-6::).
+
+#+begin_src scheme
+  (list 1 (list 2 (list 3 4)))
+#+end_src
+
+#+RESULTS:
+| 1 | (2 (3 4)) |
+
+#+name: exercise-2.24
+#+header: :file exercise-2.24.png
+#+header: :results file drawer
+#+header: :imagemagick yes
+#+header: :headers '("\\usepackage{tikz-qtree,tikz-qtree-compat}")
+#+begin_src latex
+  \begin{tikzpicture}[level 1/.style={level distance=1.5cm}]
+    \Tree
+        [.{(1 (2 (3 4)))}
+          [[.1 ] [.{(2 (3 4))}
+              [.2 ] [.{(3 4)}
+                [.3 ] [.4 ]]]]]
+  \end{tikzpicture}
+#+end_src
+
+#+RESULTS: exercise-2.24
+:results:
+[[file:exercise-2.24.png]]
+:end:
