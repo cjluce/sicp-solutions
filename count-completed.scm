@@ -84,10 +84,15 @@
 	      (cons (cons chapter (get-solved-exercises-for-chapter chapter))
 		    solved)))))
 
+(define (get-share x y)
+  (/ (round (* 1000.0 (/ x y))) 10.0))
+
 (define (share-solved-for-chapter chapter)
   (let ((total (alist-ref chapter n-exercises-by-chapter))
-	(solved (alist-ref chapter solved-exercises-by-chapter)))
-    (round (* 100.0 (/ solved total)))))
+	    (solved (alist-ref chapter solved-exercises-by-chapter)))
+    ;;(round (* 100.0 (/ solved total)))
+    (get-share solved total)
+    ))
 
 
 (define (solved-exercise-list-by-chapter chapter)
@@ -115,4 +120,7 @@
 		      (share-solved-for-chapter chapter)
 		      (solved-visualization-by-chapter chapter)))
 	    '(1 2 3 4 5))
-  (printf "Total: ~A%~N" (round (* 100.0 (/ total-solved n-exercises)))))
+  (printf "Total: ~A%~N"
+          ;; (round (* 100.0 (/ total-solved n-exercises)))
+          (get-share total-solved n-exercises)
+          ))
