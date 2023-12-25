@@ -53,7 +53,7 @@ Consider rock paper scissors, which is trivally commutative, but is
 not associative.
 
 (This function is the game of RPS)
-$$r:\{r,p,s\}\times \{r,p,s\} \rightarrow \{r,p,s\}$$ such that:
+$$*:\{r,p,s\}\times \{r,p,s\} \rightarrow \{r,p,s\}$$ such that:
 
 You can read this as:
 | * | r | p | s |
